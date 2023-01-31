@@ -1,4 +1,4 @@
-#--AWS EC2 Server--
+# AWS EC2 Server
 Line of code used to ssh (starting from home directory). ssh -i ./Documents/CS\ 260/production.pem ubuntu@18.119.143.2
 I used gitbash for the ssh, maybe try to get it to work on vscode?
 I did the elastic IP thing so now my IP address is **3.128.75.219**. Keep this in mind for the ealier ssh line of code.
@@ -6,7 +6,7 @@ I did the elastic IP thing so now my IP address is **3.128.75.219**. Keep this i
 ***Important Reminder!
 Make sure to remove the elastic when I terminate the server at the end of the semester!!!!!***
 
-#--Startup Specs--
+# Startup Specs
 **The Pitch**
 Here's the pitch. I want to create a Would You Rather application that updates after each person who uses it. That way, after someone picks a choice it can show percentage of people who chose each answer. I can even put how many people have answered so that there's more context behind the percentages. I want the app to only progress through the questions (no returning to a previous) or at least not allow users to change answers. At the end I want a free response question where people have the option to add a new would you rather question.
 
