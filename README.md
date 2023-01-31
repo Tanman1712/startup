@@ -1,8 +1,11 @@
 # AWS EC2 Server
 Line of code used to ssh (starting from home directory). ssh -i ./Documents/CS\ 260/production.pem ubuntu@18.119.143.2
+
 I used gitbash for the ssh, maybe try to get it to work on vscode?
+
 I did the elastic IP thing so now my IP address is **3.128.75.219**. Keep this in mind for the ealier ssh line of code.
 **Yeah, looks like the old ip doesn't work anymore.**
+
 ***Important Reminder!
 Make sure to remove the elastic when I terminate the server at the end of the semester!!!!!***
 
