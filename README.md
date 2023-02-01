@@ -1,3 +1,7 @@
+# AWS Route 53
+My domain name is wouldyourather.click
+Not much else of import
+
 # AWS EC2 Server
 Line of code used to ssh (starting from home directory). ssh -i ./Documents/CS\ 260/production.pem ubuntu@18.119.143.2
 
