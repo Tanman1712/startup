@@ -1,3 +1,6 @@
+# Html Stuff
+The Html Introduction has a table of all the different divisions and special characters
+
 # AWS Route 53
 My domain name is wouldyourather.click
 Not much else of import
