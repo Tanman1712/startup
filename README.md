@@ -1,3 +1,7 @@
+# Deployment Script
+Make sure to run the script inside of website-html. Here's the line of code
+./deployWebsite.sh -k ~/Documents/CS\ 260/production.pem -h wouldyourather.click
+
 # Html Stuff
 The Html Introduction has a table of all the different divisions and special characters
 
