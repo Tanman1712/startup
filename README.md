@@ -1,3 +1,6 @@
+# HTML Simon
+Just finished it. There was a lot that I wanted to mess around with but they were more CSS and Javascript changes so I didn't change much of the example code. I did learn a lot from it. View the simon README.md for some notes. HTML really is pretty bare bones. 
+
 # Deployment Script
 Make sure to run the script inside of website-html. Here's the line of code
 ./deployWebsite.sh -k ~/Documents/CS\ 260/production.pem -h wouldyourather.click
