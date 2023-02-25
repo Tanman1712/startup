@@ -61,3 +61,10 @@ footer a {
     background-color: #20715b;
     color:#73df51;
 }
+
+@media (max-height: 700px) {
+
+    footer {
+        display: none;
+    }
+}
