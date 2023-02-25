@@ -81,8 +81,44 @@ footer a {
 }
 
 .option:nth-child(2) {
-  background-color: #D9f883;
+  background-color: #caf459;
   color: #36c20a;
+}
+
+.option > div {
+  font-size: 50px;
+  position: relative;
+  top: 30px;
+}
+
+.option > button {
+  position: relative;
+  top: 10vh;
+  background-color: #73df51;
+}
+
+#results {
+  margin-top: 25px;
+  /* have background match users choice*/
+  background-color: #6ccdba;
+  color: #269602;
+  height: fit-content;
+  width: max-content;
+  align-self: center;
+  text-align: left;
+  padding: .5em .5em;
+}
+
+#results > div:nth-child(1) {
+  font-size: 25px;
+}
+
+.next {
+  margin-top: 25px;
+  height: fit-content;
+  width: 8vh;
+  align-self: center;
+  background-color: #73df51;
 }
 
 @media (max-height: 700px) {
