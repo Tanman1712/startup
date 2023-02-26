@@ -1,7 +1,9 @@
 # Start up deliverable
 Finished most of the html and css. It's pretty much all done but there are certain things that will be easier to implement at the same time as the js. Like I want to allow users to continue as guests which means instead of the table with their answers appearing in I'd Rather, there will be a message directing them to signin to save progress.
 
-I really like green which is why I'm basing the color scheme around it but I might update it in the future.
+I really like green which is why I'm basing the color scheme around it but I might update it in the future. Here's the link for the color scheme: https://paletton.com/#uid=52J0u0koQvvf3JykkAwursMvwma
+
+Once I start the javascript, the Objects and classes codepen will be pretty useful https://codepen.io/Tanman1712/pen/OJoRxqB
 
 ## Things I want to implement if I have time:
 As mentioned before, continue as guest.  For some reason I can't remember any of the others so I'll update this later if they come back to me.
