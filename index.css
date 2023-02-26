@@ -81,3 +81,8 @@ footer a {
 tbody tr td:first-child {
     vertical-align: middle;
 }
+
+.explanation {
+    font-size: 2em;
+    width: 75%;
+}
