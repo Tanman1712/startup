@@ -1,3 +1,11 @@
+# Start up deliverable
+Finished most of the html and css. It's pretty much all done but there are certain things that will be easier to implement at the same time as the js. Like I want to allow users to continue as guests which means instead of the table with their answers appearing in I'd Rather, there will be a message directing them to signin to save progress.
+
+I really like green which is why I'm basing the color scheme around it but I might update it in the future.
+
+## Things I want to implement if I have time:
+As mentioned before, continue as guest.  For some reason I can't remember any of the others so I'll update this later if they come back to me.
+
 # CSS Simon
 Honestly, I didn't learn a whole lot out of it. I learned that I'm not super creative when it comes to changing the css. I have no idea how I'm going to handle colors and stuff for the startup
 
