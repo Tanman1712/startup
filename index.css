@@ -69,3 +69,15 @@ footer a {
         display: none;
     }
 }
+
+.table tbody tr:nth-child(2n+1), .table tbody tr:nth-child(2n+2) {
+    background: #079377;
+   }
+
+   .table tbody tr:nth-child(4n+1), .table tbody tr:nth-child(4n+2) {
+    background: #36c20a;
+   }
+
+tbody tr td:first-child {
+    vertical-align: middle;
+}
