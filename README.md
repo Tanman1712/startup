@@ -1,3 +1,10 @@
+# JS Simon
+I didn't think I'd actually put anything here but here we are. Important note, when building strings in VSCode, I need to use backticks (same button as tilde) in order for it to style correctly. For example,
+
+const background = `hsl(${this.hue}, 100%, ${level}%)`;
+
+When I used single quotes, it didn't recognize the variables. Also, ${} is how you nest variables inside quotes/strings.
+
 # Start up deliverable
 Finished most of the html and css. It's pretty much all done but there are certain things that will be easier to implement at the same time as the js. Like I want to allow users to continue as guests which means instead of the table with their answers appearing in I'd Rather, there will be a message directing them to signin to save progress.
 
