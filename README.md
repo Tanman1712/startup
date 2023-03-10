@@ -1,3 +1,12 @@
+# Midterm Notes
+For loading google fonts, I can use @import url('https://fonts.googleapis.com/css?family=Quicksand');
+Box model is margin, border, padding, content
+/i means case-insensitive
+DOM textContent sets the child text for an element
+JSON is {"x":3}, double quotes for first part
+chmod +x deploy.sh makes a script executable
+CNAME is used to point to another DNS record
+
 # JS Simon
 I didn't think I'd actually put anything here but here we are. Important note, when building strings in VSCode, I need to use backticks (same button as tilde) in order for it to style correctly. For example,
 
