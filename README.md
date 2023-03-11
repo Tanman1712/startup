@@ -1,3 +1,6 @@
+# Implementing js
+There's lots to implement: shifting cards, scoreboard update, popups, and login to name a few. 
+
 # Midterm Notes
 For loading google fonts, I can use @import url('https://fonts.googleapis.com/css?family=Quicksand');
 Box model is margin, border, padding, content
