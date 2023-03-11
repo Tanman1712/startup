@@ -7,6 +7,7 @@
     <title>Would you Rather</title>
     <link rel="icon" href="favicon.ico" />
 
+    <script src="login.js"></script>
     <link rel="stylesheet" href="index.css" />
 
     <!-- Include bootstrap CSS framework -->
@@ -43,11 +44,11 @@
       <div>
         <h1 style="font-size: 5vb">Welcome to Would you Rather!</h1>
         <p style="font-size: 3vb">Create an account to save your responses</p>
-        <form method="get" action="play.html">
+        <div>
           <input type="text" id="username" placeholder="Username" />
           <input type="text" id="password" placeholder="Password" />
-          <button type="submit" class="btn btn-success">Login</button>
-        </form>
+          <button type="submit" class="btn btn-success" onclick="login()">Login</button>
+        </div>
       </div>
     </main>
 

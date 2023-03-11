@@ -1,5 +1,6 @@
 # Implementing js
-There's lots to implement: shifting cards, scoreboard update, popups, and login to name a few. 
+There's lots to implement: shifting cards, scoreboard update, popups, and login to name a few. I also need to implement the next button. I'm going to store which question they left off on in localStorage and use that to help refresh the page when next is clicked.
+Possible improvements: make thats me button turn into smiley face when chosen.
 
 # Midterm Notes
 For loading google fonts, I can use @import url('https://fonts.googleapis.com/css?family=Quicksand');
