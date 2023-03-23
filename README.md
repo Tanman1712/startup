@@ -1,3 +1,11 @@
+# Simon Service
+I was in the middle of making some changes to my startup and currently it doesn't work so I'll try to just commit the readme.
+
+Anyway, things I learned or took away from the simon service is that this is the answer to getting the scores and such off local storage. I still don't see much of a purpose for the random quotes and images since I'm not planning on buying another website though I could make another html or even service (like simon) where I could store certain objects and files and such.
+
+# Fetch
+I could use fetch as a temporary placeholder for my questions until I learn how to use a database specifically with a website. I could also potentially use it as a local storage maybe? But honestly for now I could create an html file specifically holding javascipt objects that refer to the different questions. I don't know how I'd put multiple on the same webpage and I don't think having multiple would be good practice.
+
 # Implementing js
 There's lots to implement: shifting cards, scoreboard update, popups, and login to name a few. I also need to implement the next button. I'm going to store which question they left off on in localStorage and use that to help refresh the page when next is clicked.
 Possible improvements: make thats me button turn into smiley face when chosen.
