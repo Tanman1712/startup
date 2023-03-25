@@ -1,3 +1,25 @@
+# Simon DB
+I can probably yoink most of the high score storage for my startup. Files to refer to in simon-db are the database.js which sets up the mongo client and the env variables, and index.js where we reference the new DB for getting the high scores and such.
+
+Collections are the tables storing the values which we can add items using insertOne or query items. I'm going to need at least three collections. One to hold users, another to hold the different questions, and the last one might not actually be needed but I could use it to help the user table not hold too large of objects by having it hold users friends (if I get around to implementing that). Honestly, I think I can store most things I'll need in just two collections.
+
+### Items with User Collections
+Username, password, array of which questions have been answered and their choice, friends ids?
+
+### Items with Question Collections
+Questions choice 1 and 2, times each were selected, potentially percentages but might just calculate them on the spot, ...
+
+# Database Service
+Might need to restart before each deployment so heres the code for easy reference
+
+ssh -i ../production.pem ubuntu@3.128.75.219
+
+sudo vi /etc/environment
+
+pm2 restart all --update-env
+
+pm2 save
+
 # Simon Service
 I was in the middle of making some changes to my startup and currently it doesn't work so I'll try to just commit the readme.
 
