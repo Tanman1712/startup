@@ -1,3 +1,6 @@
+# Simon Login
+Main changes occur in index.html, login.js, and login.css. Look for setAuthCookie to handle remembering a user. My brain is too dead right now. I'll look at this again later when I don't have twenty deadlines to meet.
+
 # Simon DB
 I can probably yoink most of the high score storage for my startup. Files to refer to in simon-db are the database.js which sets up the mongo client and the env variables, and index.js where we reference the new DB for getting the high scores and such.
 
