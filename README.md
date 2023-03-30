@@ -1,3 +1,6 @@
+# Simon Websocket
+Need to install the ws NPM package. Then you attach a listener to the HTTP server. Use the peerProxy.js to upgrade HTTP to Websocket. play.js has most of the functionality of the websocket. I could use this to implement the friends thing maybe. I'm not really sure how I'm going to use this.
+
 # Simon Login
 Main changes occur in index.html, login.js, and login.css. Look for setAuthCookie to handle remembering a user. My brain is too dead right now. I'll look at this again later when I don't have twenty deadlines to meet.
 
