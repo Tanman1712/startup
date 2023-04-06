@@ -1,3 +1,6 @@
+# Startup Implementing the Service
+This will mark the start of the Service section. Things I need to do are setup the npm init for the project, create a websocket, setup mongodb with my tables, and other things that I can't remember but this will be a good start.
+
 # Simon Websocket
 Need to install the ws NPM package. Then you attach a listener to the HTTP server. Use the peerProxy.js to upgrade HTTP to Websocket. play.js has most of the functionality of the websocket. I could use this to implement the friends thing maybe. I'm not really sure how I'm going to use this.
 
