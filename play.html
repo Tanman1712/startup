@@ -40,15 +40,15 @@
     </header>
 
     <main class="container-fluid text-center">
-        <h1>Would <span class="player-name"></span> Rather:</h1>
+        <h1 id="welcome">Would <span class="player-name"></span> Rather:</h1>
         <div class="spacer">
           <card class="option">
             <div>Sleep all day</div>
-            <button value="25" id="opt1" onclick="madeChoice(this.value, this.id)">That's me!</button>
+            <button id="opt1" onclick="madeChoice(this.id)">That's me!</button>
           </card>
           <card class="option">
             <div>Party all night</div>
-            <button value="75" id="opt2" onclick="madeChoice(this.value, this.id)">That's me!</button>
+            <button id="opt2" onclick="madeChoice(this.id)">That's me!</button>
           </card>
         </div>
         <div class="spacer" id="continue" style="display: none">
