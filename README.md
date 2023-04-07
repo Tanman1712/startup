@@ -1,6 +1,10 @@
 # Startup Implementing the Service
 This will mark the start of the Service section. Things I need to do are setup the npm init for the project, create a websocket, setup mongodb with my tables, and other things that I can't remember but this will be a good start.
 
+Just had an idea for implementing the websocket. What I can do is keep it simple by using one similar to simon, so it will notify all users when a question has been answered then it will encourage them to check out "I'd Rather" to see how the percentages have changed.
+
+service notes: I need an /api/player-resp which holds objects with { name: userName, answers: [0 and 1s]} and I need /api/questions
+
 # Simon Websocket
 Need to install the ws NPM package. Then you attach a listener to the HTTP server. Use the peerProxy.js to upgrade HTTP to Websocket. play.js has most of the functionality of the websocket. I could use this to implement the friends thing maybe. I'm not really sure how I'm going to use this.
 

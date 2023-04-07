@@ -1,11 +1,29 @@
-function loadResponses() {
+async function loadResponses() {
   let responses = [];
-  let checkmark = "&#x2705;";
-  const responseText = localStorage.getItem('responses');
-  if (responseText) {
-    responses = JSON.parse(responseText);
+  let questions = [];
+  try {
+    const respApi = await fetch('/api/responses');
+    responses = await respApi.json();
+
+    localStorage.setItem('responses', JSON.stringify(responses));
+
+    const questionsApi = await fetch('/api/questions');
+    questions = await questionsApi.json();
+
+    localStorage.setItem('questions', JSON.stringify(questions));
+  } catch {
+    const responseText = localStorage.getItem('responses');
+    if (responseText) {
+      responses = JSON.parse(responseText);
+      localStorage.setItem('numResp', JSON.stringify(responses.length));
+    }
   }
 
+  displayResponses(responses, questions);
+}
+
+function displayResponses(responses, questions) {
+  const checkmark = "&#x2705;";
   const tableBodyEl = document.querySelector('#responses');
 
   if (responses.length) {
