@@ -7,7 +7,6 @@
     <title>Would you Rather</title>
     <link rel="icon" href="favicon.ico" />
 
-    <script src="login.js"></script>
     <link rel="stylesheet" href="index.css" />
 
     <!-- Include bootstrap CSS framework -->
@@ -27,10 +26,10 @@
           <li class="nav-item">
             <a class="nav-link active" href="index.html">Home</a>
           </li>
-          <li class="nav-item">
+          <li id="play" class="nav-item">
             <a class="nav-link" href="play.html">Play</a>
           </li>
-          <li class="nav-item">
+          <li id="rather" class="nav-item">
             <a class="nav-link" href="rather.html">I'd Rather</a>
           </li>
           <li class="nav-item">
@@ -43,13 +42,47 @@
     <main id="index" class="container-fluid text-center">
       <div>
         <h1 style="font-size: 5vb">Welcome to Would you Rather!</h1>
-        <p style="font-size: 3vb">Create an account to save your responses</p>
-        <div>
-          <input type="text" id="username" placeholder="Username" />
-          <input type="text" id="password" placeholder="Password" />
-          <button type="submit" class="btn btn-success" onclick="login()">Login</button>
+        <p style="font-size: 3vb">Create an account to get started!</p>
+        <div id="loginControls" style="display: none">
+          <div class="input-group mb-3">
+            <span class="input-group-text">@</span>
+            <input
+              class="form-control"
+              type="text"
+              id="username"
+              placeholder="Username"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text">🔒</span>
+            <input
+              class="form-control"
+              type="password"
+              id="password"
+              placeholder="Password"
+            />
+          </div>
+          <button type="button" class="btn btn-success" onclick="loginUser()">
+            Login
+          </button>
+          <button type="button" class="btn btn-success" onclick="createUser()">
+            Create
+          </button>
+        </div>
+        <!-- Displayed when ready to play -->
+        <div id="playControls" style="display: none">
+          <div class="player-name" style="font-size: 1.5em"></div>
+          <button type="button" class="btn btn-success" onclick="play()">
+            Play
+          </button>
+          <button type="button" class="btn btn-success" onclick="logout()">
+            Logout
+          </button>
         </div>
       </div>
+
+      <!-- Error dialog -->
+      <div id="msgModal"></div>
     </main>
 
     <footer class="bg-dark text-muted">
@@ -62,5 +95,6 @@
         >
       </div>
     </footer>
+    <script src="login.js"></script>
   </body>
 </html>

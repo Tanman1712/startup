@@ -92,3 +92,7 @@ tbody tr td:first-child {
     font-size: 3vh;
     width: 75%;
 }
+
+#play, #rather {
+    display: none;
+}
