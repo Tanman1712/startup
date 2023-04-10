@@ -1,3 +1,6 @@
+# Simon React
+Organize the files using src then each pages html css and js. check to make sure files that need to be jsx are. refer back for specific implementations of getUser and setting up the router. Useful for debugging
+
 # Startup Implementing the Service
 This will mark the start of the Service section. Things I need to do are setup the npm init for the project, create a websocket, setup mongodb with my tables, and other things that I can't remember but this will be a good start.
 

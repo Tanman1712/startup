@@ -58,9 +58,7 @@ apiRouter.delete('/auth/logout', (_req, res) => {
 
 // GetUser returns information about a user
 apiRouter.get('/user/:username', async (req, res) => {
-  console.log("made it here moo");
   const user = await DB.getUser(req.params.username);
-  console.log("made it further");
   if (user) {
     const token = req?.cookies.token;
     res.send({ username: user.username, authenticated: token === user.token });
@@ -84,17 +82,17 @@ secureApiRouter.use(async (req, res, next) => {
 });
 
 // GetUserResponses
-secureApiRouter.get('/responses', async (req, res) => {
+secureApiRouter.get('/responses/:username', async (req, res) => {
   // check if it's req.params or req.body
-  const responses = await DB.getPlayerResponses(req.params.username);
-  res.send(responses);
+  const user = await DB.getUser(req.params.username);
+  res.send(user.responses);
 });
 
 // SubmitResponse
 secureApiRouter.post('/player-resp', async (req, res) => {
   await DB.addResp(req.body);
-  const responses = await DB.getPlayerResponses(req.body.username);
-  res.send(responses);
+  const user = await DB.getUser(req.body.username);
+  res.send({ responses: user.responses });
 });
 
 secureApiRouter.get('/questions', async (req, res) => {
@@ -106,6 +104,11 @@ secureApiRouter.post('/question', async (req, res) => {
   //req needs the question and choice picked
   await DB.updateQPerc(req.body);
   const questions = await DB.getQuestions();
+  res.send(questions);
+});
+
+secureApiRouter.get('/totalq', async (req, res) => {
+  const questions = await DB.getNumQuestions();
   res.send(questions);
 });
 

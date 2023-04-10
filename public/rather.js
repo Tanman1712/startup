@@ -1,11 +1,16 @@
 async function loadResponses() {
   let responses = [];
   let questions = [];
+  debugger;
   try {
-    const respApi = await fetch('/api/responses');
+    const respApi = await fetch('/api/responses', {
+      method: 'get',
+      body: JSON.stringify({ username: localStorage.getItem('userName') }),
+    });
     responses = await respApi.json();
 
     localStorage.setItem('responses', JSON.stringify(responses));
+    localStorage.setItem('currentQ', responses.length);
 
     const questionsApi = await fetch('/api/questions');
     questions = await questionsApi.json();
@@ -28,6 +33,7 @@ function displayResponses(responses, questions) {
 
   if (responses.length) {
     for (const [i, resp] of responses.entries()) {
+      const question = new Question(questions[i]);
       const questionTdEl = document.createElement('td');
       const choice1TdEl = document.createElement('td');
       const picked1TdEl = document.createElement('td');
@@ -38,13 +44,13 @@ function displayResponses(responses, questions) {
       const perc2TdEl = document.createElement('td');
 
       questionTdEl.rowSpan = 2;
-      questionTdEl.textContent = resp.qNum + 1;
-      choice1TdEl.textContent = resp.question.opt1.text;
-      if (resp.pick === 0) picked1TdEl.innerHTML = checkmark;
+      questionTdEl.textContent = i + 1;
+      choice1TdEl.textContent = question.opt1.text;
+      if (resp === 0) picked1TdEl.innerHTML = checkmark;
       else picked2TdEl.innerHTML = checkmark;
-      perc1TdEl.textContent = resp.question.opt1Perc;
-      choice2TdEl.textContent = resp.question.opt2.text;
-      perc2TdEl.textContent = resp.question.opt2Perc;
+      perc1TdEl.textContent = question.opt1Perc;
+      choice2TdEl.textContent = question.opt2.text;
+      perc2TdEl.textContent = question.opt2Perc;
 
       const row1El = document.createElement('tr');
       const row2El = document.createElement('tr');

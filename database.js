@@ -44,10 +44,6 @@ function addResp(resp) {
   userCollection.update({ username: resp.username}, {$push: { responses: resp.response }});
 }
 
-function getPlayerResponses(username) {
-  return getUser(username).responses;
-}
-
 function updateQPerc(question) {
   // question = { text: text, choice: 0 or 1}
   let currQuestion = new Question(questionCollection.findOne({ text: question.text }));
@@ -64,7 +60,6 @@ module.exports = {
   getUserByToken,
   createUser,
   addResp,
-  getPlayerResponses,
   updateQPerc,
   getQuestions,
 };

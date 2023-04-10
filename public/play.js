@@ -43,37 +43,76 @@ function next() {
   localStorage.setItem("numResp", getQ());
   window.location.href = "play.html";
 }
-function getQ() {
-  let q = parseInt(JSON.parse(localStorage.getItem("currentQ"))) || 0;
-  let numResp = parseInt(JSON.parse(localStorage.getItem('numResp'))) || 0;
-  if (q >= optionPairs.length) {
-    q = -1;
-  } else if (q === -1 && numResp < optionPairs.length) {
-    q = numResp;
+
+async function getQ() {
+  let q;
+  try {
+    let url = `/api/responses/${localStorage.getItem('userName')}`
+    const currQ = await fetch(url);
+    q = await currQ.json();
+    q = q.responses.length;
+    
+    localStorage.setItem('currentQ', q);
+  } catch {
+    const currentQ = localStorage.getItem('currentQ');
+    if (currentQ) {
+      q = parseInt(JSON.parse(currentQ));
+    }
   }
-  localStorage.setItem("currentQ", q);
+
+  let totalQuestions;
+  try {
+    const totalQ = await fetch('/api/questions');
+    totalQuestions = await totalQ.json();
+    totalQuestions = totalQuestions.length;
+    
+    localStorage.setItem("numResp", JSON.stringify(totalQuestions));
+  } catch {
+    const totalQText = localStorage.getItem('numResp');
+    if (totalQText) {
+      totalQuestions = parseInt(JSON.parse(totalQText));
+    }
+  }
+  
+  if (q >= totalQuestions) {
+    localStorage.setItem('allAnswered', JSON.stringify(true));
+  } else {
+    localStorage.setItem('allAnswered', JSON.stringify(false));
+  }
+
   return q;
 }
 
 class Game {
   constructor() {
     this.updateCards();
-    const playerNameEl = document.querySelector('.player-name');
-    playerNameEl.textContent = this.getPlayerName();
   }
-  getPlayerName() {
-    return localStorage.getItem('userName') || 'you';
-  }
-  updateCards() {
+  
+  async updateCards() {
     const nodeList = document.querySelectorAll("card > div");
-    const q = getQ();
-    if (q === -1) {
+    const q = await getQ();
+    let allAnswered = JSON.parse(localStorage.getItem('allAnswered'));
+    if (allAnswered === "true") {
       document.getElementsByClassName("spacer")[0].setAttribute("style", "display: none");
       document.getElementById("welcome").innerHTML = 'Sorry <span class="player-name"></span>, ' +
         'you\'ve already answered all our questions! Come back later for more!';
     } else {
       document.getElementsByClassName("spacer")[0].setAttribute("style", "display: grid");
       document.getElementById("welcome").innerHTML = 'Would <span class="player-name"></span> Rather:';
+      let questions = [];
+      try {
+        const qApi = await fetch('/api/questions');
+        questions = await qApi.json();
+        localStorage.setItem('questions', JSON.stringify(questions));
+      } catch {
+        const questionsText = localStorage.getItem('questions');
+        if (questionsText) {
+          questions = JSON.parse(questionsText);
+        }
+      }
+      
+      const playerNameEl = document.querySelector('.player-name');
+      playerNameEl.textContent = localStorage.getItem('userName') || 'you';
       nodeList[0].textContent = questions[q].opt1.text;
       nodeList[1].textContent = questions[q].opt2.text;
     }
