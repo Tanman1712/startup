@@ -59,6 +59,7 @@ function logout() {
   fetch(`/api/auth/logout`, {
     method: 'delete',
   }).then(() => (window.location.href = '/'));
+  //localStorage.removeItem('notifyOnce');
 }
 
 async function getUser(username) {
@@ -77,3 +78,4 @@ function setDisplay(controlId, display) {
     playControlEl.style.display = display;
   }
 }
+

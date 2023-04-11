@@ -1,3 +1,6 @@
+const GameStartEvent = 'gameStart';
+const GameAnswerEvent = 'questionAnswered';
+
 async function madeChoice(id) {
   document.getElementById('continue').style.display = "block";
   var resultEl = document.getElementById('results');
@@ -26,10 +29,8 @@ async function trackResp(x) {
   let q = simplifiedGetQ();
   let oldQuestion;
   let question;
-  if (!q) 
-    oldQuestion = questions[getQ()];
-  else
-    oldQuestion = questions[q];
+  
+  oldQuestion = questions[q];
   const percEl = document.getElementById('percent');
   try {
     const oneQuestion = await fetch('/api/question', {
@@ -51,8 +52,9 @@ async function trackResp(x) {
     percEl.textContent = question.getPercent(x);
   }
   
+  let userName;
   try {
-    let userName = localStorage.getItem('userName');
+    userName = localStorage.getItem('userName');
     const addResp = await fetch('/api/playerresp', {
       method: 'POST',
       headers: { 
@@ -74,12 +76,10 @@ async function trackResp(x) {
     localStorage.setItem('responses', responses);
   }
 
-  
+  game.broadcastEvent(userName, GameAnswerEvent, {qNum: q});
 }
 
 function next() {
-  // localStorage.setItem("currentQ", JSON.stringify(getQ() + 1));
-  // localStorage.setItem("numResp", getQ());
   window.location.href = "play.html";
 }
 
@@ -122,7 +122,7 @@ async function getQ() {
       totalQuestions = parseInt(JSON.parse(totalQText));
     }
   }
-  
+
   if (q >= totalQuestions) {
     localStorage.setItem('allAnswered', JSON.stringify(true));
   } else {
@@ -133,8 +133,19 @@ async function getQ() {
 }
 
 class Game {
-  constructor() {
+  socket;
+  constructor() {//socket) {
+    this.configureWebSocket();
     this.updateCards();
+    
+    //this.socket = socket;
+    // debugger;
+    let notifyOnce = localStorage.getItem('notifyOnce');
+    // console.log(notifyOnce);
+    if (!notifyOnce) {
+      this.broadcastEvent(localStorage.getItem('userName'), GameStartEvent, {});
+      localStorage.setItem('notifyOnce', JSON.stringify(true));
+    }
   }
   
   async updateCards() {
@@ -167,7 +178,85 @@ class Game {
     }
     //if (getQ() >= this.questions.length) localStorage.currentQ = JSON.stringify(0);
   }
+
+  configureWebSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+    this.socket.onopen = (event) => {
+      this.displayMsg('system', 'game', 'connected');
+    };
+    this.socket.onclose = (event) => {
+      this.displayMsg('system', 'game', 'disconnected');
+    };
+    this.socket.onmessage = async (event) => {
+      const msg = JSON.parse(await event.data.text());
+      if (msg.type === GameStartEvent) {
+        this.displayMsg('player', msg.from, `started a new game`);
+      } else if (msg.type === GameAnswerEvent) {
+        this.displayMsg('player', msg.from, `just answered question ${msg.qNum}\nGo see the new stats in I'd Rather!`);
+      }
+    };
+  }
+
+  displayMsg(cls, from, msg) {
+    const chatText = document.querySelector('#player-messages');
+    chatText.innerHTML =
+      `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+  }
+
+  broadcastEvent(from, type, value) {
+    const event = {
+      from: from,
+      type: type,
+      value: value,
+    };
+    delay(5000);
+    this.socket.send(JSON.stringify(event));
+  }
 }
 
-const game = new Game();
+// function configureWebSocket(socket) {
+//   debugger;
+//   const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+//   socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+//   socket.onopen = (event) => {
+//     this.displayMsg('system', 'game', 'connected');
+//   };
+//   socket.onclose = (event) => {
+//     this.displayMsg('system', 'game', 'disconnected');
+//   };
+//   socket.onmessage = async (event) => {
+//     const msg = JSON.parse(await event.data.text());
+//     if (msg.type === GameStartEvent) {
+//       this.displayMsg('player', msg.from, `started a new game`);
+//     } else if (msg.type === GameAnswerEvent) {
+//       this.displayMsg('player', msg.from, `just answered question ${msg.qNum}\nGo see the new stats in I'd Rather!`);
+//     }
+//   };
+// }
+
+// function displayMsg(cls, from, msg) {
+//   const chatText = document.querySelector('#player-messages');
+//   chatText.innerHTML =
+//     `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+// }
+
+// function broadcastEvent(from, type, value) {
+//   const event = {
+//     from: from,
+//     type: type,
+//     value: value,
+//   };
+//   socket.send(JSON.stringify(event));
+// }
+
+// let socket;
+// configureWebSocket(socket);
+const game = new Game();//socket);
+
+function delay(milliseconds) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+}
 
