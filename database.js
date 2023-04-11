@@ -1,6 +1,7 @@
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
+const Question = require('./global_classes.js');
 
 const userName = process.env.MONGOUSER;
 const password = process.env.MONGOPASSWORD;
@@ -39,16 +40,17 @@ async function createUser(username, password) {
   return user;
 }
 
-function addResp(resp) {
+async function addResp(resp) {
   // resp = { username: username, response: 0 or 1 }
-  userCollection.update({ username: resp.username}, {$push: { responses: resp.response }});
+  await userCollection.findOneAndUpdate({ username: resp.username}, {$push: { responses: resp.response }});
 }
 
-function updateQPerc(question) {
+async function updateQPerc(question) {
   // question = { text: text, choice: 0 or 1}
-  let currQuestion = new Question(questionCollection.findOne({ text: question.text }));
+  let currQuestion = new Question( await questionCollection.findOne({ text: question.text }));
   currQuestion.updatePercents(question.choice);
   questionCollection.findOneAndReplace({ text: question.text }, currQuestion, {returnNewDocument: true});
+  return currQuestion;
 }
 
 function getQuestions() {

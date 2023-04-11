@@ -89,10 +89,10 @@ secureApiRouter.get('/responses/:username', async (req, res) => {
 });
 
 // SubmitResponse
-secureApiRouter.post('/player-resp', async (req, res) => {
+secureApiRouter.post('/playerresp', async (req, res) => {
   await DB.addResp(req.body);
   const user = await DB.getUser(req.body.username);
-  res.send({ responses: user.responses });
+  res.send(user.responses);
 });
 
 secureApiRouter.get('/questions', async (req, res) => {
@@ -102,14 +102,9 @@ secureApiRouter.get('/questions', async (req, res) => {
 
 secureApiRouter.post('/question', async (req, res) => {
   //req needs the question and choice picked
-  await DB.updateQPerc(req.body);
+  const test = await DB.updateQPerc(req.body);
   const questions = await DB.getQuestions();
-  res.send(questions);
-});
-
-secureApiRouter.get('/totalq', async (req, res) => {
-  const questions = await DB.getNumQuestions();
-  res.send(questions);
+  res.send(test);
 });
 
 // Default error handler

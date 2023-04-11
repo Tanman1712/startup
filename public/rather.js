@@ -1,12 +1,9 @@
 async function loadResponses() {
   let responses = [];
   let questions = [];
-  debugger;
   try {
-    const respApi = await fetch('/api/responses', {
-      method: 'get',
-      body: JSON.stringify({ username: localStorage.getItem('userName') }),
-    });
+    let url = `/api/responses/${localStorage.getItem('userName')}`;
+    const respApi = await fetch(url);
     responses = await respApi.json();
 
     localStorage.setItem('responses', JSON.stringify(responses));

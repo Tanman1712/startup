@@ -34,7 +34,7 @@ class Question {
   
   roundPercent(num) {
     if (num === 1) return 100;
-    return Math.round((num + Number.EPSILON) * 100) / 100;
+    return Math.round((num + Number.EPSILON) * 100);// / 100;
   }
 }
 
@@ -44,3 +44,5 @@ class Option {
     this.numPicked = 0;
   }
 }
+
+module.exports = Question
