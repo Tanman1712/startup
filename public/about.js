@@ -37,7 +37,6 @@ function displayQuote(data) {
 async function getUser(username) {
   let scores = [];
   // See if we have a user with the given email.
-  console.log("made it here");
   const response = await fetch(`/api/user/${username}`);
   if (response.status === 200) {
     return response.json();
@@ -53,4 +52,26 @@ function setDisplay(controlId, display) {
   }
 }
 
-displayQuote();
+async function email() {
+  debugger;
+  const suggestionEl = document.querySelector("textarea");
+  console.log(suggestionEl.value);
+  const response = await fetch('/api/suggest', {
+    method: 'post',
+    body: JSON.stringify({ text: suggestionEl.value }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+
+  const body = await response.json();
+  if (response?.status === 200) {
+    displayQuote();
+  } else {
+    const modalEl = document.querySelector('#msgModal');
+    modalEl.textContent = `⚠ Error: ${body.msg}`;
+  }
+  
+}
+
+//displayQuote();

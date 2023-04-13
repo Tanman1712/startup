@@ -16,6 +16,7 @@ const url = `mongodb+srv://${userName}:${password}@${hostname}`;
 const client = new MongoClient(url);
 const userCollection = client.db('startup').collection('user');
 const questionCollection = client.db('startup').collection('questions');
+const suggestionCollection = client.db('startup').collection('suggestions');
 
 function getUser(username) {
   return userCollection.findOne({ username: username });
@@ -57,6 +58,13 @@ function getQuestions() {
   return questionCollection.find({}).toArray();
 }
 
+async function email(text) {
+  if (text === "" || text === null)
+    return;
+  await suggestionCollection.insertOne({words: text});
+  return "hi";
+}
+
 module.exports = {
   getUser,
   getUserByToken,
@@ -64,4 +72,5 @@ module.exports = {
   addResp,
   updateQPerc,
   getQuestions,
+  email,
 };

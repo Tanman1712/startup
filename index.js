@@ -108,6 +108,14 @@ secureApiRouter.post('/question', async (req, res) => {
   res.send(test);
 });
 
+secureApiRouter.post('/suggest', async (req, res) => {
+  const resp = await DB.email(req.body.text);
+  if (resp)
+    res.status(200).send({ msg: "Sent" });
+  else
+    res.status(500).send({ msg: "Unable to send" });
+});
+
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
