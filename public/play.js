@@ -1,10 +1,12 @@
 const GameStartEvent = 'gameStart';
 const GameAnswerEvent = 'questionAnswered';
+var socket;
+configureWebSocket();
 
 async function madeChoice(id) {
   document.getElementById('continue').style.display = "block";
   var resultEl = document.getElementById('results');
-  resultEl.classList.forEach(c => element.classList.remove(c));
+  resultEl.classList.forEach(c => resultEl.classList.remove(c));
   if (id === "opt1") {
     resultEl.classList.add("opt1");
     await trackResp(0);
@@ -16,7 +18,7 @@ async function madeChoice(id) {
 
   const nodeList = document.querySelectorAll("card > button");
   for (let i = 0; i < nodeList.length; ++i) {
-    nodeList[i].disabled="true";
+    nodeList[i].disabled=true;
   }
 
   //localStorage.setItem("questions", JSON.stringify(questions));
@@ -76,11 +78,17 @@ async function trackResp(x) {
     localStorage.setItem('responses', responses);
   }
 
-  game.broadcastEvent(userName, GameAnswerEvent, {qNum: q});
+  broadcastEvent(userName, GameAnswerEvent, {qNum: q + 1});
 }
 
 function next() {
-  window.location.href = "play.html";
+  document.getElementById('continue').style.display = "none";
+  const nodeList = document.querySelectorAll("card > button");
+  for (let i = 0; i < nodeList.length; ++i) {
+    nodeList[i].disabled=false;
+  }
+  game.updateCards();
+  //window.location.href = "play.html";
 }
 
 function simplifiedGetQ() {
@@ -133,19 +141,8 @@ async function getQ() {
 }
 
 class Game {
-  socket;
-  constructor() {//socket) {
-    this.configureWebSocket();
+  constructor() {
     this.updateCards();
-    
-    //this.socket = socket;
-    // debugger;
-    let notifyOnce = localStorage.getItem('notifyOnce');
-    // console.log(notifyOnce);
-    if (!notifyOnce) {
-      this.broadcastEvent(localStorage.getItem('userName'), GameStartEvent, {});
-      localStorage.setItem('notifyOnce', JSON.stringify(true));
-    }
   }
   
   async updateCards() {
@@ -179,80 +176,50 @@ class Game {
     //if (getQ() >= this.questions.length) localStorage.currentQ = JSON.stringify(0);
   }
 
-  configureWebSocket() {
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
-    this.socket.onopen = (event) => {
-      this.displayMsg('system', 'game', 'connected');
-    };
-    this.socket.onclose = (event) => {
-      this.displayMsg('system', 'game', 'disconnected');
-    };
-    this.socket.onmessage = async (event) => {
-      const msg = JSON.parse(await event.data.text());
-      if (msg.type === GameStartEvent) {
-        this.displayMsg('player', msg.from, `started a new game`);
-      } else if (msg.type === GameAnswerEvent) {
-        this.displayMsg('player', msg.from, `just answered question ${msg.qNum}\nGo see the new stats in I'd Rather!`);
-      }
-    };
-  }
-
-  displayMsg(cls, from, msg) {
-    const chatText = document.querySelector('#player-messages');
-    chatText.innerHTML =
-      `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
-  }
-
-  broadcastEvent(from, type, value) {
-    const event = {
-      from: from,
-      type: type,
-      value: value,
-    };
-    delay(5000);
-    this.socket.send(JSON.stringify(event));
-  }
+  
 }
 
-// function configureWebSocket(socket) {
-//   debugger;
-//   const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-//   socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
-//   socket.onopen = (event) => {
-//     this.displayMsg('system', 'game', 'connected');
-//   };
-//   socket.onclose = (event) => {
-//     this.displayMsg('system', 'game', 'disconnected');
-//   };
-//   socket.onmessage = async (event) => {
-//     const msg = JSON.parse(await event.data.text());
-//     if (msg.type === GameStartEvent) {
-//       this.displayMsg('player', msg.from, `started a new game`);
-//     } else if (msg.type === GameAnswerEvent) {
-//       this.displayMsg('player', msg.from, `just answered question ${msg.qNum}\nGo see the new stats in I'd Rather!`);
-//     }
-//   };
-// }
+function configureWebSocket() {
+  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+  this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+  this.socket.onopen = (event) => {
+    let notifyOnce = localStorage.getItem('notifyOnce');
+    if (!notifyOnce) {
+      this.displayMsg('system', 'game', 'connected');
+      localStorage.setItem('notifyOnce', true);
+    }
+  };
+  this.socket.onclose = (event) => {
+    this.displayMsg('system', 'game', 'Good answer');
+  };
+  this.socket.onmessage = async (event) => {
+    const msg = JSON.parse(await event.data.text());
+    if (msg.type === GameStartEvent) {
+      this.displayMsg('player', msg.from, `started answering questions`);
+    } else if (msg.type === GameAnswerEvent) {
+      this.displayMsg('', '', `Go see the new stats in I'd Rather!`);
+      this.displayMsg('player', msg.from, `just answered question ${msg.value.qNum}`);
+    }
+  };
+}
 
-// function displayMsg(cls, from, msg) {
-//   const chatText = document.querySelector('#player-messages');
-//   chatText.innerHTML =
-//     `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
-// }
+function displayMsg(cls, from, msg) {
+  const chatText = document.querySelector('#player-messages');
+  chatText.innerHTML =
+    `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+}
 
-// function broadcastEvent(from, type, value) {
-//   const event = {
-//     from: from,
-//     type: type,
-//     value: value,
-//   };
-//   socket.send(JSON.stringify(event));
-// }
+function broadcastEvent(from, type, value) {
+  const event = {
+    from: from,
+    type: type,
+    value: value,
+  };
+  delay(5000);
+  this.socket.send(JSON.stringify(event));
+}
 
-// let socket;
-// configureWebSocket(socket);
-const game = new Game();//socket);
+const game = new Game();
 
 function delay(milliseconds) {
   return new Promise((resolve) => {
