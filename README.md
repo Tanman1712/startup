@@ -1,3 +1,9 @@
+# Final Review
+Http headers include Content-Type, host, cookies, BUT NOT language. Cookies are for client! (server store on client) Websocket is peer to peer. 
+JSX does not combine CSS with the HTML and JS. Purpose of JSX is inject HTML into JS, componentize HTML, and allow for composability of HTML.
+<NAME /> is a component. Look at return for display!!!
+NPM install ws does not add code to JS file. Fetch is front and backend usable. PM2 is an example of a daemon and a daemon starts on computer reboot, also executes independent of user. It can fork other processes. 200 Success, 300 Caching and content redirects, 400 client, 500 server.
+
 # Simon React
 Organize the files using src then each pages html css and js. check to make sure files that need to be jsx are. refer back for specific implementations of getUser and setting up the router. Useful for debugging
 
